@@ -1,6 +1,5 @@
 "use client"
 
-import React from "react"
 import { z } from "zod"
 import { LocalStackStatusSchema } from "~/app/actions/local-stack/schema"
 import Image from "next/image"
@@ -37,6 +36,7 @@ export default function Card({ title, status, imagePath }: ICard) {
         </div>
       </div>
       <div className="absolute -right-6 -bottom-6 w-1/2 h-full overflow-hidden flex items-end justify-end z-0">
+        {/* todo */}
         <Image
           className="opacity-15 rotate-12"
           src={imagePath}
