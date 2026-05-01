@@ -1,18 +1,13 @@
 "use client"
 
 import { useMemo } from "react"
-import { PollingChildProps } from "./PollingProcessing"
-import Card from "../molecules/Card"
+import { PollingChildProps } from "../component/organism/PollingProcessing"
+import Card from "../component/molecules/Card"
 import { LocalStackStatus } from "~/app/actions/local-stack/schema"
 
 type ServiceStatus = "running" | "available" | "disabled"
 
-export default function CardList({
-  data,
-  error,
-  isLoading,
-  isValidating,
-}: PollingChildProps<LocalStackStatus>) {
+export default function DashboardContainer({ data }: PollingChildProps<LocalStackStatus>) {
   const services = useMemo(() => {
     const groups: Record<
       string,
@@ -22,9 +17,7 @@ export default function CardList({
       available: [],
       disabled: [],
     }
-    if (!data) {
-      return groups
-    }
+
     Object.entries(data.services).forEach(([name, services]) => {
       if (services.status === "running") {
         groups.running.push({
@@ -49,30 +42,9 @@ export default function CardList({
     return groups
   }, [data])
 
-  if (error) {
-    return (
-      <div>
-        <p>error!!!</p>
-      </div>
-    )
-  }
-
-  if (isLoading) {
-    return (
-      <div>
-        <p>loading...</p>
-      </div>
-    )
-  }
-
   const groupOrder = ["running", "available", "disabled"]
   return (
     <div className="flex flex-col gap-12">
-      {isValidating && (
-        <div className="fixed top-4 right-4 text-primary">
-          <span className="loading loading-spinner loading-sm"></span>
-        </div>
-      )}
       {groupOrder.map((groupName) => {
         const service = services[groupName]
         if (service.length < 1) {

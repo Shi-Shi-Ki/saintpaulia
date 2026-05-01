@@ -3,10 +3,7 @@
 import useSWR from "swr"
 
 export interface PollingChildProps<T> {
-  data: T | undefined
-  error: unknown
-  isLoading: boolean // データのフェッチが開始され、まだキャッシュにデータがない（dataがundefined）状態でtrueとなる
-  isValidating: boolean // いわゆるロード中のフラグ
+  data: T
 }
 
 interface IPollingProcessingProps<T> {
@@ -32,5 +29,30 @@ export default function PollingProcessing<T>({
     revalidateOnFocus: revalidateOnFocus,
   })
 
-  return <Component data={data} error={error} isLoading={isLoading} isValidating={isValidating} />
+  if (error) {
+    return (
+      <>
+        <p>error...</p>
+      </>
+    )
+  }
+
+  if (isLoading || !data) {
+    return (
+      <div className="flex justify-center p-12">
+        <span className="loading loading-spinner loading-lg text-primary"></span>
+      </div>
+    )
+  }
+
+  return (
+    <div>
+      {isValidating && (
+        <div className="absolute -top-8 right-0 text-primary z-10">
+          <span className="loading loading-spinner loading-sm"></span>
+        </div>
+      )}
+      <Component data={data} />
+    </div>
+  )
 }

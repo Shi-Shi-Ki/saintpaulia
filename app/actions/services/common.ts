@@ -1,14 +1,24 @@
-import { getUrl } from "../setting"
+import { getUrl } from "@actions/setting"
 
-export async function connectionInfo() {
+interface Credentials {
+  endpoint: string
+  region: string
+  credentials: {
+    accessKeyId: string
+    secretAccessKey: string
+  }
+}
+
+async function credentials(): Promise<Credentials> {
   const url = await getUrl()
 
   return {
-    // endpoint: url ?? "http://localhost:4566",
-    // endpoint: "http://host.docker.internal:4566",
-    // endpoint: "http://127.0.0.1:4566",
-    endpoint: "http://localhost:4566",
+    endpoint: url ?? "http://localhost:4566",
     region: "ap-northeast-1",
     credentials: { accessKeyId: "dummy", secretAccessKey: "dummy" },
   }
+}
+
+export async function connection<T>(ClientClass: new (config: Credentials) => T) {
+  return new ClientClass(await credentials())
 }

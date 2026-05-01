@@ -1,5 +1,5 @@
 import PollingProcessing from "~/component/organism/PollingProcessing"
-import CardList from "~/component/organism/CardList"
+import DashboardContainer from "~/app/DashboardContainer"
 import { status } from "~/app/actions/local-stack/status"
 import { LocalStackStatus } from "./actions/local-stack/schema"
 
@@ -25,9 +25,9 @@ export default async function DashBoard() {
         <main className="p-2">
           <PollingProcessing<LocalStackStatus>
             initialData={initialData} // nullが返る可能性がある場合は undefined に変換
-            pollingKey="localstack-status"
+            pollingKey="local-stack-status"
             pollingFunction={status}
-            Component={CardList}
+            Component={DashboardContainer}
           />
         </main>
       </div>

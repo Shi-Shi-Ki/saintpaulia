@@ -1,15 +1,11 @@
 "use server"
 
 import { CloudWatchLogsClient, DescribeLogGroupsCommand } from "@aws-sdk/client-cloudwatch-logs"
-import { connectionInfo } from "../../common"
+import { connection } from "@actions/services/common"
 import { CloudwatchLogsGroup, CloudwatchLogsGroupsSchema } from "./schema"
 
-async function connection() {
-  return new CloudWatchLogsClient(await connectionInfo())
-}
-
-export async function logGroupList() {
-  const client = await connection()
+export async function LogGroupList() {
+  const client = await connection(CloudWatchLogsClient)
   const command = new DescribeLogGroupsCommand({})
   try {
     const response = await client.send(command)

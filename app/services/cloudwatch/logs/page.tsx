@@ -1,5 +1,4 @@
-import React from "react"
-import { logGroupList } from "~/app/actions/services/cloudwatch/logs/groups"
+import { LogGroupList } from "~/app/actions/services/cloudwatch/logs/groups"
 import PollingProcessing from "~/component/organism/PollingProcessing"
 import LogGroupTableContainer from "./LogGroupTableContainer"
 import { CloudwatchLogsGroups } from "~/app/actions/services/cloudwatch/logs/schema"
@@ -7,7 +6,7 @@ import { CloudwatchLogsGroups } from "~/app/actions/services/cloudwatch/logs/sch
 export default async function CloudwatchLogsLogGroupPage() {
   let initialData: CloudwatchLogsGroups | undefined = undefined
   try {
-    initialData = await logGroupList()
+    initialData = await LogGroupList()
   } catch (error) {
     console.error(error)
   }
@@ -16,8 +15,8 @@ export default async function CloudwatchLogsLogGroupPage() {
     <div>
       <PollingProcessing<CloudwatchLogsGroups>
         initialData={initialData}
-        pollingKey="localstack-status"
-        pollingFunction={logGroupList}
+        pollingKey="cloudwatch-logs-group"
+        pollingFunction={LogGroupList}
         Component={LogGroupTableContainer}
       />
     </div>

@@ -10,16 +10,19 @@ export interface ITableColumnDef<T> {
 export interface ITable<T> {
   data: T[]
   columns: ITableColumnDef<T>[]
+  wrapperClassName?: string
 }
 
-export default function Table<T>({ data, columns }: ITable<T>) {
+export default function Table<T>({ data, columns, wrapperClassName = "" }: ITable<T>) {
   return (
-    <div className="overflow-x-auto">
-      <table className="table table-zebra">
+    <div className={`overflow-x-auto overflow-y-auto ${wrapperClassName}`}>
+      <table className="table table-pin-rows table-zebra w-full">
         <thead>
           <tr>
             {columns.map((column, idx) => (
-              <th key={idx}>{column.header}</th>
+              <th key={idx} className="bg-base-200 shadow-sm z-20">
+                {column.header}
+              </th>
             ))}
           </tr>
         </thead>
