@@ -3,6 +3,8 @@ import { LogStreamList } from "~/app/actions/services/cloudwatch/logs/streams/st
 import PollingProcessing from "~/component/organism/PollingProcessing"
 import LogStreamsTableContainer from "./LogStreamsTableContainer"
 import { DescribeLogStreamsCommandInput } from "@aws-sdk/client-cloudwatch-logs"
+import { buildBreadcrumbs } from "~/lib/config/route-schema"
+import BreadcrumbSetter from "~/component/atoms/BreadcrumbSetter"
 
 interface PageProps {
   searchParams: {
@@ -21,7 +23,7 @@ export default async function CloudwatchLogsLogStreamPage({ searchParams }: Page
   }
   const logStreamParam: DescribeLogStreamsCommandInput = {
     logGroupName: query.logGroup,
-    orderBy: "LogStreamName",
+    orderBy: "LastEventTime",
   }
 
   let initialData: CloudwatchLogsStreams | undefined = undefined
@@ -31,11 +33,14 @@ export default async function CloudwatchLogsLogStreamPage({ searchParams }: Page
     console.error(error)
   }
 
+  const currentCrumbs = buildBreadcrumbs("CLOUDWATCH_STREAMS", query)
+
   return (
     <div>
+      <BreadcrumbSetter crumbs={currentCrumbs} />
       <PollingProcessing<CloudwatchLogsStreams>
         initialData={initialData}
-        pollingKey="cloudwatch-logs-group"
+        pollingKey="cloudwatch-logs-streams"
         pollingFunction={LogStreamList.bind(null, logStreamParam)}
         Component={LogStreamsTableContainer}
       />

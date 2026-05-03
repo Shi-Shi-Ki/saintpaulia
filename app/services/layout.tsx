@@ -1,8 +1,11 @@
+import Breadcrumbs from "~/component/molecules/Breadcrumbs"
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <header>
         <p>service page header</p>
+        <Breadcrumbs />
       </header>
 
       <main className="flex-1 flex flex-col">{children}</main>

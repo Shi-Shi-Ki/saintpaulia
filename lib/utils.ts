@@ -12,6 +12,7 @@ export const convertJsDateToFormatDateString = (
       dateTime.setZone(timeZone)
     }
     if (!dateTime.isValid) {
+      console.log("date: ", date)
       throw new Error(`Invalid Date object: ${date.toString()}`)
     }
 

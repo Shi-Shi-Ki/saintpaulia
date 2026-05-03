@@ -4,6 +4,7 @@ import { useMemo } from "react"
 import { PollingChildProps } from "../component/organism/PollingProcessing"
 import Card from "../component/molecules/Card"
 import { LocalStackStatus } from "~/app/actions/local-stack/schema"
+import Link from "next/link"
 
 type ServiceStatus = "running" | "available" | "disabled"
 
@@ -11,7 +12,7 @@ export default function DashboardContainer({ data }: PollingChildProps<LocalStac
   const services = useMemo(() => {
     const groups: Record<
       string,
-      { serviceName: string; status: ServiceStatus; imagePath: string }[]
+      { serviceName: string; status: ServiceStatus; imagePath: string; linkPath: string }[]
     > = {
       running: [],
       available: [],
@@ -24,18 +25,21 @@ export default function DashboardContainer({ data }: PollingChildProps<LocalStac
           serviceName: name,
           status: services.status,
           imagePath: services.image,
+          linkPath: services.link,
         })
       } else if (services.status === "available") {
         groups.available.push({
           serviceName: name,
           status: services.status,
           imagePath: services.image,
+          linkPath: services.link,
         })
       } else if (services.status === "disabled") {
         groups.disabled.push({
           serviceName: name,
           status: services.status,
           imagePath: services.image,
+          linkPath: services.link,
         })
       }
     })
@@ -56,15 +60,17 @@ export default function DashboardContainer({ data }: PollingChildProps<LocalStac
               {groupName}
             </h1>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {service.map(({ serviceName, status, imagePath }) => {
+              {service.map(({ serviceName, status, imagePath, linkPath }) => {
                 const displayName = serviceName.replace(/([A-Z])/g, " $1").trim()
                 return (
-                  <Card
-                    title={displayName.toLocaleUpperCase()}
-                    status={status}
-                    imagePath={imagePath}
-                    key={serviceName}
-                  />
+                  <Link key={serviceName} href={linkPath}>
+                    <Card
+                      title={displayName.toLocaleUpperCase()}
+                      status={status}
+                      imagePath={imagePath}
+                      key={serviceName}
+                    />
+                  </Link>
                 )
               })}
             </div>

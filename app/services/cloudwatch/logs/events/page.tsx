@@ -3,6 +3,8 @@ import LogEventList from "~/app/actions/services/cloudwatch/logs/events/events"
 import { CloudwatchLogsEvents } from "~/app/actions/services/cloudwatch/logs/events/schema"
 import PollingProcessing from "~/component/organism/PollingProcessing"
 import LogEventsTableContainer from "./LogEventsTableContainer"
+import { buildBreadcrumbs } from "~/lib/config/route-schema"
+import BreadcrumbSetter from "~/component/atoms/BreadcrumbSetter"
 
 interface PageProps {
   searchParams: {
@@ -20,6 +22,9 @@ export default async function page({ searchParams }: PageProps) {
       </div>
     )
   }
+
+  const currentCrumbs = buildBreadcrumbs("CLOUDWATCH_EVENTS", query)
+
   const logEventParam: GetLogEventsCommandInput = {
     logGroupName: query.logGroup,
     logStreamName: query.logStream,
@@ -34,9 +39,10 @@ export default async function page({ searchParams }: PageProps) {
 
   return (
     <div>
+      <BreadcrumbSetter crumbs={currentCrumbs} />
       <PollingProcessing<CloudwatchLogsEvents>
         initialData={initialData}
-        pollingKey="cloudwatch-logs-group"
+        pollingKey="cloudwatch-logs-events"
         pollingFunction={LogEventList.bind(null, logEventParam)}
         Component={LogEventsTableContainer}
       />

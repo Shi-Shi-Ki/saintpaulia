@@ -38,27 +38,37 @@ export default function LogEventsTableContainer({ data }: PollingChildProps<Clou
       },
       {
         header: "ingestionTime",
-        accessor: (row) => (
-          <span className="whitespace-nowrap">
-            {convertJsDateToFormatDateString(
-              new Date(row.ingestionTime),
-              "yyyy-MM-dd HH:ii:ss",
-              timezoneSchema.parse("Asia/Tokyo") // todo
-            )}
-          </span>
-        ),
+        accessor: (row) => {
+          if (!row.ingestionTime) {
+            return <span className="whitespace-nowrap">-</span>
+          }
+          return (
+            <span className="whitespace-nowrap">
+              {convertJsDateToFormatDateString(
+                new Date(row.ingestionTime),
+                "yyyy-MM-dd HH:ii:ss",
+                timezoneSchema.parse("Asia/Tokyo") // todo
+              )}
+            </span>
+          )
+        },
       },
       {
         header: "timeStamp",
-        accessor: (row) => (
-          <span className="whitespace-nowrap">
-            {convertJsDateToFormatDateString(
-              new Date(row.timeStamp),
-              "yyyy-MM-dd HH:ii:ss",
-              timezoneSchema.parse("Asia/Tokyo") // todo
-            )}
-          </span>
-        ), // todo
+        accessor: (row) => {
+          if (!row.timeStamp) {
+            return <span className="whitespace-nowrap">-</span>
+          }
+          return (
+            <span className="whitespace-nowrap">
+              {convertJsDateToFormatDateString(
+                new Date(row.timeStamp),
+                "yyyy-MM-dd HH:ii:ss",
+                timezoneSchema.parse("Asia/Tokyo") // todo
+              )}
+            </span>
+          )
+        }, // todo
       },
     ],
     []

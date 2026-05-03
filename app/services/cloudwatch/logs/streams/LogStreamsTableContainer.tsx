@@ -31,12 +31,16 @@ export default function LogStreamsTableContainer({
       },
       {
         header: "作成時間",
-        accessor: (row) =>
-          convertJsDateToFormatDateString(
+        accessor: (row) => {
+          if (!row.creationTime) {
+            return "" // todo async/awaitしないといけない??
+          }
+          return convertJsDateToFormatDateString(
             new Date(row.creationTime),
             "yyyy-MM-dd HH:ii:ss",
             timezoneSchema.parse("Asia/Tokyo") // todo
-          ),
+          )
+        },
       },
       { header: "最初のイベントのタイムスタンプ", accessor: (row) => row.firstEventTimestamp },
       { header: "最後のイベントのタイムスタンプ", accessor: (row) => row.lastEventTimestamp },

@@ -16,7 +16,12 @@ export default async function LogEventList(commandParam: GetLogEventsCommandInpu
     if (!response.events) {
       return []
     }
-    const logEvents = response.events.map((event): CloudwatchLogsEvent => {
+    const sortedEvents = response.events.sort((a, b) => {
+      const timeA = a.timestamp ?? 0
+      const timeB = b.timestamp ?? 0
+      return timeB - timeA // 降順 (新しい順)
+    })
+    const logEvents = sortedEvents.map((event): CloudwatchLogsEvent => {
       const data = {
         ingestionTime: event.ingestionTime ?? 0,
         message: event.message ?? "",

@@ -1,5 +1,6 @@
 "use server"
 
+import { ROUTE_SCHEMA } from "~/lib/config/route-schema"
 import { getUrl } from "../setting"
 import {
   LocalStackStatusDetail,
@@ -27,6 +28,7 @@ export async function status() {
       transformedServices[serviceName] = {
         status: statusValue,
         image: imagePathMap[serviceName] ?? "/default.svg",
+        link: linkPathMap[serviceName],
       }
     })
     const formattedData = {
@@ -78,4 +80,42 @@ const imagePathMap: { [key: string]: string } = {
   support: "/aws/group/AWS-Cloud_32.svg",
   swf: "/aws/service/app-integration/Arch_AWS-Step-Functions_64.svg",
   transcribe: "/aws/service/artificial-intelligence/Arch_Amazon-Transcribe_64.svg",
+}
+
+const linkPathMap: { [key: string]: string } = {
+  acm: "",
+  apigateway: "",
+  cloudformation: "",
+  cloudwatch: "",
+  config: "",
+  dynamodb: "",
+  dynamodbstreams: "",
+  ec2: "",
+  es: "",
+  events: "",
+  firehose: "",
+  iam: "",
+  kinesis: "",
+  kms: "",
+  lambda: "",
+  logs: ROUTE_SCHEMA["CLOUDWATCH_LOGS"].basePath,
+  opensearch: "",
+  redshift: "",
+  "resource-groups": "",
+  resourcegroupstaggingapi: "",
+  route53: "",
+  route53resolver: "",
+  s3: "",
+  s3control: "",
+  scheduler: "",
+  secretsmanager: "",
+  ses: "",
+  sns: "",
+  sqs: "",
+  ssm: "",
+  stepfunctions: "",
+  sts: "",
+  support: "",
+  swf: "",
+  transcribe: "",
 }

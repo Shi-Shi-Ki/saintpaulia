@@ -13,6 +13,7 @@ export type OriginalLocalStackStatus = z.infer<typeof OriginalLocalStackStatusSc
 export const LocalStackStatusDetailSchema = z.object({
   status: z.enum(statusType),
   image: z.string(),
+  link: z.string(),
 })
 export type LocalStackStatusDetail = z.infer<typeof LocalStackStatusDetailSchema>
 
@@ -23,6 +24,7 @@ export const LocalStackStatusSchema = z.object({
     z.object({
       status: z.enum(statusType),
       image: z.string(),
+      link: z.string(),
     })
   ),
   edition: z.string(),
