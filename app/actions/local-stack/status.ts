@@ -88,7 +88,7 @@ const linkPathMap: { [key: string]: string } = {
   cloudformation: "",
   cloudwatch: "",
   config: "",
-  dynamodb: "",
+  dynamodb: ROUTE_SCHEMA["DYNAMODB_TABLES"].basePath,
   dynamodbstreams: "",
   ec2: "",
   es: "",

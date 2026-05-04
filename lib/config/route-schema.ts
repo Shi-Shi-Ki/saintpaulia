@@ -33,6 +33,12 @@ export const ROUTE_SCHEMA: Record<string, RouteDefinition> = {
     queryKeys: ["logGroup", "logStream"],
     labelSuffixKey: "logStream",
   },
+  DYNAMODB_TABLES: {
+    id: "DYNAMODB_TABLES",
+    parentId: "HOME",
+    baseLabel: "Log Groups",
+    basePath: "/services/dynamodb/tables",
+  },
 }
 
 export function buildBreadcrumbs(

@@ -1,6 +1,6 @@
 import { LogGroupList } from "~/app/actions/services/cloudwatch/logs/groups"
 import PollingProcessing from "~/component/organism/PollingProcessing"
-import LogGroupTableContainer from "./LogGroupTableContainer"
+import LogGroupsTableContainer from "./LogGroupsTableContainer"
 import { CloudwatchLogsGroups } from "~/app/actions/services/cloudwatch/logs/schema"
 import { buildBreadcrumbs } from "~/lib/config/route-schema"
 import BreadcrumbSetter from "~/component/atoms/BreadcrumbSetter"
@@ -22,7 +22,7 @@ export default async function CloudwatchLogsLogGroupPage() {
         initialData={initialData}
         pollingKey="cloudwatch-logs-groups"
         pollingFunction={LogGroupList}
-        Component={LogGroupTableContainer}
+        Component={LogGroupsTableContainer}
       />
     </div>
   )

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useMemo } from "react"
+import { useMemo } from "react"
 import { PollingChildProps } from "~/component/organism/PollingProcessing"
 import Table, { ITableColumnDef } from "~/component/atoms/Table"
 import {
@@ -9,7 +9,7 @@ import {
 } from "~/app/actions/services/cloudwatch/logs/schema"
 import Link from "next/link"
 
-export default function LogGroupTableContainer({ data }: PollingChildProps<CloudwatchLogsGroups>) {
+export default function LogGroupsTableContainer({ data }: PollingChildProps<CloudwatchLogsGroups>) {
   const dataRows = useMemo<ITableColumnDef<CloudwatchLogsGroup>[]>(
     () => [
       {
